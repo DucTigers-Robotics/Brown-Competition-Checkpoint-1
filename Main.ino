@@ -1,12 +1,12 @@
 #include <Wire.h>
-#include <Encoder.h>
 #include <VL6180X.h>
 
 #include "DT_Motor.h"
 #include "DT_DistanceSensor.h"
 
-DT_Motor motor_left(8, 7, 6);
-DT_Motor motor_right(5, 12, 9);
+// NEED TO CHANGE LAST TO ARGUMENTS TO FIT ACTUAL WIRING
+DT_Motor motor_left(8, 7, 6, 2, 5);
+DT_Motor motor_right(5, 12, 9, 3, 11);
 
 DT_DistanceSensor distance_sensor;
 
@@ -49,6 +49,16 @@ void loop() {
     Serial.print(" TIMEOUT"); 
   
   Serial.println();
+
+///  OUTPUT ENCODER READINGS FOR TESTING
+  Serial.print("ENCODER LEFT READING: ");
+  Serial.print(motor_left.read_encoder());
+  Serial.println();
+
+  Serial.print("ENCODER RIGHT READING: ");
+  Serial.print(motor_right.read_encoder());
+  Serial.println();
+  
   
   delay(1000);
 }
