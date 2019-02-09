@@ -15,15 +15,29 @@ void DT_Motor::setup()
 
 void DT_Motor::forward(byte spd)
 {
-  digitalWrite(pin_a, LOW);
-  digitalWrite(pin_b, HIGH);
+  if (spd < 1)
+   { digitalWrite(pin_a, LOW);}
+  else
+  {
+   digitalWrite(pin_a, HIGH);
+  }
+  digitalWrite(pin_b, LOW);
   analogWrite(pin_pwm, spd);
+ 
 }
 
 void DT_Motor::backward(byte spd)
 {
-  digitalWrite(pin_a, HIGH);
+   digitalWrite(pin_a, LOW);
+   if (spd < 1)
+   {
   digitalWrite(pin_b, LOW);
+   }
+   else
+   {
+    digitalWrite(pin_b, HIGH);
+    
+   }
   analogWrite(pin_pwm, spd);
 }
 

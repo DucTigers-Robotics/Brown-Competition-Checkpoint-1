@@ -19,11 +19,14 @@ void setup() {
 
   motor_left.setup();
   motor_right.setup();
+
+//  motor_left.set_encoder(0);
+//  motor_right.set_encoder(0);
 }
 void forward(int spd) {
   // NOTE: One needs to move forward while the other moves backwards because of orientation
   motor_left.forward(spd);
-  motor_right.backward(spd);
+  motor_right.forward(spd);
 }
 
 void backward(int spd) {
@@ -31,25 +34,45 @@ void backward(int spd) {
   motor_left.backward(spd);
   motor_right.forward(spd);
 }
-
+byte r = 0;
 void loop() {
-  // put your main code here, to run repeatedly:
-  forward(100);
-  
-  Serial.print("Ambient: ");
-  Serial.print(distance_sensor.readAmbientContinuous());
-      
-  if (distance_sensor.timeoutOccurred()) 
-    Serial.print(" TIMEOUT");
-    
-  Serial.print("\tRange: ");
-  Serial.print(distance_sensor.readRangeContinuousMillimeters());
-  
-  if (distance_sensor.timeoutOccurred())
-    Serial.print(" TIMEOUT"); 
-  
+  delay(1000);
+  motor_right.forward(160);
+  motor_left.forward( 160);
+  r = distance_sensor.readRangeContinuousMillimeters();
+  Serial.print("Range: ");
+  Serial.print(r);
   Serial.println();
-
+  if (r> 30)
+  {
+    motor_right.forward(160);
+    motor_left.forward(160);
+  }
+  else
+  {
+    motor_left.forward(0);
+    motor_right.forward(0);
+    
+  }
+  
+  // put your main code here, to run repeatedly:
+  //forward(100);
+  //
+  
+  
+//  Serial.print("Ambient: ");
+//  Serial.print(distance_sensor.readAmbientContinuous());
+//      
+//  if (distance_sensor.timeoutOccurred()) 
+//    Serial.print(" TIMEOUT");
+//    
+//  Serial.print("\tRange: ");
+//  Serial.print(distance_sensor.readRangeContinuousMillimeters());
+//  
+//  if (distance_sensor.timeoutOccurred())
+//    Serial.print(" TIMEOUT"); 
+//  
+//  Serial.println();
 ///  OUTPUT ENCODER READINGS FOR TESTING
   Serial.print("ENCODER LEFT READING: ");
   Serial.print(motor_left.read_encoder());
@@ -58,7 +81,8 @@ void loop() {
   Serial.print("ENCODER RIGHT READING: ");
   Serial.print(motor_right.read_encoder());
   Serial.println();
-  
-  
-  delay(1000);
+//  
+//  
+//  delay(1000);
+//
 }
