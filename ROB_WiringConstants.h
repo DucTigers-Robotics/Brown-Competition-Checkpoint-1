@@ -1,0 +1,20 @@
+#ifndef WIRING_CONSTS_H
+#define WIRING_CONSTS_H
+
+// motor constants
+#define LEFT_MOTOR_PIN_A 0
+#define LEFT_MOTOR_PIN_B 0
+#define LEFT_MOTOR_PIN_PWM 0
+
+#define RIGHT_MOTOR_PIN_A 0
+#define RIGHT_MOTOR_PIN_B 0
+#define RIGHT_MOTOR_PIN_PWM 0
+
+// encoder constants
+#define LEFT_MOTOR_ENCODER_PIN_INTER 0
+#define LEFT_MOTOR_ENCODER_PIN_NORMAL 0
+
+#define RIGHT_MOTOR_ENCODER_PIN_INTER 0
+#define RIGHT_MOTOR_ENCODER_PIN_NORMAL 0
+
+#endif
