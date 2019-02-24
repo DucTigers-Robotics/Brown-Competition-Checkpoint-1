@@ -3,28 +3,30 @@
 
 #include <arduino.h>
 #include "ROB_WiringConstants.h"
+#include "DT_Motor.h"
 
 class ROB_Movement
 {
   private:
-  DT_Motor left_motor, right_motor;
+  DT_Motor * left_motor, * right_motor;
   
   void move_forward(int spd);
   void move_backward(int spd);
+  void stop();
 
   
   public:
-  ROB_Movement(){};
-  ~ROB_Movement(){};
-
-  void init();
+  ROB_Movement();
+  ~ROB_Movement();
 
   // move the robot based on the opcode. first byte is instruction, second is arg
   void move(int op_code);
 
   // some testing opcodes
-  const static MOVE_FORWARD_2_SECONDS = 1;
-  const static MOVE_BACKWARD_2_SECONDS = 2;
+  const static int MOVE_FORWARD = 1;
+  const static int MOVE_FORWARD_SLOW = 5;
+  const static int MOVE_BACKWARD = 2;
+  const static int MOVE_STOP = 6;
   
 };
 

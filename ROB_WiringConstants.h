@@ -2,9 +2,9 @@
 #define WIRING_CONSTS_H
 
 // motor constants
-#define LEFT_MOTOR_PIN_A 0
-#define LEFT_MOTOR_PIN_B 0
-#define LEFT_MOTOR_PIN_PWM 0
+#define LEFT_MOTOR_PIN_A 7
+#define LEFT_MOTOR_PIN_B 8
+#define LEFT_MOTOR_PIN_PWM 6
 
 #define RIGHT_MOTOR_PIN_A 0
 #define RIGHT_MOTOR_PIN_B 0
