@@ -2,9 +2,9 @@
 
 ROB_DistanceSensing::ROB_DistanceSensing()
 {
-  forward_sensor = new DT_DistanceSensor(FORWARD_DISTANCE_SENSOR_ADDRESS, FORWARD_DISTANCE_SENSOR_PIN);
-  left_sensor = new DT_DistanceSensor(LEFT_DISTANCE_SENSOR_ADDRESS, LEFT_DISTANCE_SENSOR_PIN);
-  right_sensor = new DT_DistanceSensor(RIGHT_DISTANCE_SENSOR_ADDRESS, RIGHT_DISTANCE_SENSOR_PIN);
+  forward_sensor = new DT_DistanceSensor(FORWARD_DISTANCE_SENSOR_PIN, FORWARD_DISTANCE_SENSOR_ADDRESS);
+  left_sensor = new DT_DistanceSensor(LEFT_DISTANCE_SENSOR_PIN, LEFT_DISTANCE_SENSOR_ADDRESS);
+  right_sensor = new DT_DistanceSensor(RIGHT_DISTANCE_SENSOR_PIN, RIGHT_DISTANCE_SENSOR_ADDRESS);
   
 }
 
