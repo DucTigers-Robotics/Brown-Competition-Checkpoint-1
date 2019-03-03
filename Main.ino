@@ -2,27 +2,33 @@
 #include <VL6180X.h>
 
 #include "ROB_Movement.h"
-#include "DT_Motor.h"
+#include "ROB_DistanceSensing.h"
 #include "ROB_WiringConstants.h"
 
-ROB_Movement * robot_movement_module;
+//ROB_Movement * robot_movement_module;
+ROB_DistanceSensing * robot_distance_sensing;
 //DT_Motor * motor;
 
 void setup() {
-  robot_movement_module = new ROB_Movement();
+Serial.begin(9600);
+  Wire.begin();
+  Serial.print("writing");
+  
+  robot_distance_sensing = new ROB_DistanceSensing();
+  robot_distance_sensing->init_sensors();
+  //robot_movement_module = new ROB_Movement();
+  Serial.println();
 }
 
 void loop() {
 
 
-    robot_movement_module->move(ROB_Movement::MOVE_BACKWARD);
-  delay(2000);
-
-
-    robot_movement_module->move(ROB_Movement::MOVE_FORWARD_SLOW);
-  delay(2000);
-
+Serial.print("\tforward: ");
+Serial.print(robot_distance_sensing->read_forward());
+Serial.print("\tleft: ");
+Serial.print(robot_distance_sensing->read_left());
+Serial.print("\tright: ");
+Serial.print(robot_distance_sensing->read_right());
+Serial.println();
   
-  robot_movement_module->move(ROB_Movement::MOVE_STOP);
-  delay(1000);
 }

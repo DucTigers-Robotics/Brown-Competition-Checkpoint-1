@@ -1,26 +1,30 @@
 #include "DT_DistanceSensor.h"
 
 // Testing editing a file.
-DT_DistanceSensor::DT_DistanceSensor()
+DT_DistanceSensor::DT_DistanceSensor(int pin, byte address)
+: pin(pin), address(address)
 {
 }
 
 void DT_DistanceSensor::setup()
 {
+  digitalWrite(pin, HIGH);
+  delay(50);
   init();
   configureDefault();
-  // Reduce range max convergence time and ALS integration
-  // time to 30 ms and 50 ms, respectively, to allow 10 Hz
-  // operation (as suggested by Table 6 ("Interleaved mode
-  // limits (10 Hz operation)") in the datasheet).
+  setAddress(address);
   writeReg(VL6180X::SYSRANGE__MAX_CONVERGENCE_TIME, 30);
   writeReg16Bit(VL6180X::SYSALS__INTEGRATION_PERIOD, 50);
   setTimeout(500);
-   // stop continuous mode if already active
   stopContinuous();
-  // in case stopContinuous() triggered a single-shot
-  // measurement, wait for it to complete
+  setScaling(RANGE);
   delay(300);
-  // start interleaved continuous mode with period of 100 ms
   startInterleavedContinuous(100);
+  delay(100);
 }
+
+int DT_DistanceSensor::read_distance()
+{
+  return readRangeContinuousMillimeters();
+}
+
