@@ -1,7 +1,7 @@
 #ifndef MAZE_H
 #define MAZE_H
 
-#define SIZE 5
+#define SIZE 16
 #define NORTH 1
 #define SOUTH 2
 #define EAST 3
@@ -16,8 +16,6 @@ class Maze
   Cell cells[SIZE][SIZE];
   byte stack[SIZE * SIZE];
   byte head;
-
-  void build_walls();
   void init_config();
 
   public:
@@ -40,6 +38,7 @@ class Maze
 
   byte to_pos(byte row, byte col);
 
+// adjusts the tiles and returns the next tile the robot should go to
   byte flood(byte pos);
 };
 

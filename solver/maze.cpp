@@ -2,109 +2,39 @@
 
 Maze::Maze()
 {
-  
   init_config();
-
-  // to delete
-  build_walls();
   
   head = 0;
 }
 
-// to delete
-void Maze::build_walls()
-{
-  // north, east, south, west
-  boolean test_walls[25][4]
-  {
-    // 
-    {true, true, false, true},
-    {true, true, false, true},
-    {true, true, false, true},
-    {true, true, false, true},
-    {true, true, false, true},
-
-    {false, false, false, true},
-    {false, true, false, false},
-    {false, true, false, true},
-    {false, false, true, true},
-    {false, true, true, false},
-
-    {false, true, false, true},
-    {false, true, false, true},
-    {false, true, false, true},
-    {true, false, false, true},
-    {true, true, true, false},
-
-    {false, false, false, true},
-    {false, false, false, false},
-    {false, true, false, false},
-    {false, true, false, true},
-    {true, true, false, true},
-
-    {false, true, true, true},
-    {false, true, true, true},
-    {false, false, true, true},
-    {false, false, true, false},
-    {false, true, true, false},
-  };  
-
-  byte count = 0;
-  for (byte row = 0; row < 5; row++)
-  {
-    for (byte col = 0; col < 5; col++)
-    {
-      if (test_walls[count][0])
-      {
-        cells[row][col].set_north_wall();
-      }
-      if (test_walls[count][1])
-      {
-        cells[row][col].set_east_wall();
-      }
-      if (test_walls[count][2])
-      {
-        cells[row][col].set_south_wall();
-      }
-      if (test_walls[count][3])
-      {
-        cells[row][col].set_west_wall();
-      }
-      
-      count += 1;
-    }
-  }
-}
-
 void Maze::init_config()
 {
-  byte mid = 2;
-  byte base = SIZE;
-  byte cur;
+  byte base = 14;
+  byte midlo = 7;
+  byte midhi = 8;
+  byte offset = 0;
+
   for (byte row = 0; row < SIZE; row++)
   {
-    // adjust cur val
-    if (row > mid)
+    offset = 0;
+    if (row <= midlo)
     {
-      base += 1;
+      offset = row;
     }
-    else
+    else if (row >= midhi)
     {
-      base -= 1;
+      base = row - 1;
     }
 
-    cur = base;
     for (byte col = 0; col < SIZE; col++)
     {
-      if (col >= mid)
+      if (col <= midlo)
       {
-        cells[row][col] = Cell(cur);
-        cur += 1;
+        cells[row][col] = Cell(base - col - offset);
       }
-      else
+      else if (col >= midhi)
       {
-        cells[row][col] = Cell(cur);
-        cur -= 1;
+        cells[row][col] = Cell(base - midlo + (col - midhi) - offset);
       }
     }
   }
