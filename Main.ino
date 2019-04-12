@@ -9,7 +9,10 @@ ROB_Movement * robot_movement_module;
 ROB_DistanceSensing * robot_distance_sensing;
 //DT_Motor * motor;
 
-int timer = 0;
+int left;
+int right;
+int front;
+int leftMinusRight;
 
 void setup() {
 Serial.begin(9600);
@@ -20,25 +23,62 @@ Serial.begin(9600);
   robot_distance_sensing->init_sensors();
   robot_movement_module = new ROB_Movement();
   Serial.println();
-
-  //robot_movement_module->move(ROB_Movement::MOVE_FORWARD);
 }
 
 void loop() {
-  Serial.println(robot_distance_sensing->read_left_encoder());
-  //Serial.println(robot_distance_sensing->read_right_encoder());
-  Serial.println();
 
-  if (timer <= 5000)
-  {
-    robot_movement_module->move(ROB_Movement::MOVE_FORWARD);
-  }
-  else
-  {
-    robot_movement_module->move(ROB_Movement::MOVE_BACKWARD);
-  }
-  
-  delay(50);
-  timer += 50;
-  Serial.println(robot_distance_sensing->read_left_encoder());
+Serial.print("\tforward: ");
+front = robot_distance_sensing->read_forward();
+Serial.print(front);
+Serial.print("\tleft: ");
+left = robot_distance_sensing->read_left();
+Serial.print(left);
+Serial.print("\tright: ");
+right = robot_distance_sensing->read_right();
+Serial.print(right);
+Serial.println();
+
+robot_movement_module->move(1);
+robot_movement_module->adjust(255, left - right);
+
+// make left
+if (left == 255 && right != 255) {
+  robot_movement_module->move(5);
+  delay(20);
+  robot_movement_module->move(3);
+}
+
+/*
+if(left - right > 5) {
+  robot_movement_module->move(3);
+} else if (left - right < -5) {
+  robot_movement_module->move(4);
+}
+*/
+
+//dont fall off edge
+while (left == 255 && right == 255) {
+  robot_movement_module->move(6);
+  left = robot_distance_sensing->read_left();
+  right = robot_distance_sensing->read_right();
+}
+
+
+
+/*
+if(left - right > leftMinusRight) {
+  robot_movement_module->move(3);
+} else {
+  robot_movement_module->move(4);
+}
+leftMinusRight = left - right;
+*/
+
+/*robot_movement_module->move(3);
+robot_movement_module->move(4);
+robot_movement_module->move(10);
+delay(1000);
+robot_movement_module->move(6);
+delay(1000);*/
+
 }
